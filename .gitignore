@@ -1,0 +1,5 @@
+*.so
+app
+*.o
+*enclave_t.*
+*enclave_u.*

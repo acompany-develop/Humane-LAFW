@@ -1,0 +1,31 @@
+enclave
+{
+    from "sgx_tswitchless.edl" import *;
+
+    include "sgx_dh.h"
+
+    trusted
+    {
+        /* LAを初期化 */
+        public int ecall_responder_init_LA();
+
+        /* msg1を取得 */
+        public int ecall_responder_get_msg1([out]sgx_dh_msg1_t *msg1);
+
+        /* msg2を処理しmsg3を取得 */
+        public int ecall_responder_proc_msg2([in]sgx_dh_msg2_t *msg2,
+            [out]sgx_dh_msg3_t *msg3);
+
+        /* 2つの整数をAEKで暗号化してリターンするサンプル関数 */
+        public int ecall_responder_get_values(
+            [out, size=4]uint8_t *value1, [out, size=4]uint8_t *value2,
+            [out, size=12]uint8_t *value1_iv, [out, size=12]uint8_t *value2_iv,
+            [out, size=16]uint8_t *value1_tag, [out, size=16]uint8_t *value2_tag);
+    };
+    untrusted
+    {
+        void ocall_print([in, string]const char *str, int log_type);
+
+        void ocall_print_status(sgx_status_t st);
+    };
+};

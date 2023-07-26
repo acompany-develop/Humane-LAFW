@@ -1,0 +1,31 @@
+enclave
+{
+    //SwitchlessはResponderの方でimport済み
+
+    include "sgx_dh.h"
+    
+    trusted
+    {
+        /* LAを初期化 */
+        public int ecall_initiator_init_LA();
+
+        /* msg1を処理しmsg2を生成 */
+        public int ecall_initiator_proc_msg1([in]sgx_dh_msg1_t *msg1,
+            [out]sgx_dh_msg2_t *msg2);
+        
+        /* msg3を処理 */
+        public int ecall_initiator_proc_msg3([in]sgx_dh_msg3_t *msg3);
+
+        /* Responderから受け取った2値の平均を計算し標準出力 */
+        public int ecall_initiator_calc_average(
+        [in, size=4]uint8_t *value1, [in, size=4]uint8_t *value2,
+        [in, size=12]uint8_t *value1_iv, [in, size=12]uint8_t *value2_iv,
+        [in, size=16]uint8_t *value1_tag, [in, size=16]uint8_t *value2_tag);
+    };
+    untrusted
+    {
+        void ocall_print([in, string]const char *str, int log_type);
+
+        void ocall_print_status(sgx_status_t st);
+    };
+};
