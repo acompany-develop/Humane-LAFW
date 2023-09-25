@@ -6,7 +6,7 @@
 
 Humane−LAFWでは、Enclave外のアプリケーション（App）が、自身の同一性を証明する証明側Enclave（Initiator）と、証明側Enclaveを検証する検証側Enclave（Responder）の間を取り持つ形でLAを進行させていきます。
 
-##　導入
+## 導入
 ### 動作確認環境
 * OS: Ubuntu 22.04.3 LTS
 * SGXSDK: バージョン2.21
@@ -136,7 +136,7 @@ LAでは、証明側EnclaveのMRENCLAVEとMRSIGNERを検証側Enclaveにハー�
 ビルドと設定が完了したら、以下のコマンドで実行バイナリを実行し、LAを実行します。
 
 ```
-.app
+./app
 ```
 
 その後はLAが実行され、LAにおける同一性検証に成功したら、LAに並行して実施した楕円曲線ディフィー・ヘルマン鍵共有にて取得したセッション共通鍵を用いて、両Enclave間で安全な暗号通信路を確立させます。
